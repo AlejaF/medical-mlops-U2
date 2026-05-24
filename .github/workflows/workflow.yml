@@ -11,6 +11,10 @@ on:
       - main
 
 
+permissions:
+  pull-requests: write
+
+
 jobs:
 
   tests:
@@ -24,6 +28,9 @@ jobs:
 
 
     - name: Comentar inicio CI/CD
+
+      if: github.event_name == 'pull_request'
+
       uses: peter-evans/create-or-update-comment@v4
 
       with:
@@ -54,7 +61,7 @@ jobs:
 
     - name: Comentar fin CI/CD
 
-      if: success()
+      if: success() && github.event_name == 'pull_request'
 
       uses: peter-evans/create-or-update-comment@v4
 
@@ -65,10 +72,9 @@ jobs:
           CI/CD terminado con éxito.
 
 
-
   docker:
 
-    if: github.event_name=='push'
+    if: github.event_name == 'push'
 
     runs-on: ubuntu-latest
 
