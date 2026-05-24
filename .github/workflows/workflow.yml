@@ -22,38 +22,61 @@ jobs:
     - name: Descargar código
       uses: actions/checkout@v4
 
+
+    - name: Comentar inicio CI/CD
+      uses: peter-evans/create-or-update-comment@v4
+
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+
+        body: |
+          CI/CD en acción. Ejecutando tareas …
+
+
     - name: Configurar Python
       uses: actions/setup-python@v5
 
       with:
         python-version: '3.10'
 
+
     - name: Instalar dependencias
 
       run: |
-
         pip install -r requirements.txt
+
 
     - name: Ejecutar pruebas
 
       run: |
-
         pytest
+
+
+    - name: Comentar fin CI/CD
+
+      if: success()
+
+      uses: peter-evans/create-or-update-comment@v4
+
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+
+        body: |
+          CI/CD terminado con éxito.
+
 
 
   docker:
 
-    if: github.event_name == 'push'
+    if: github.event_name=='push'
 
     runs-on: ubuntu-latest
 
     steps:
 
-    - name: Descargar código
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
     - name: Construir imagen Docker
 
       run: |
-
         docker build -t medical-mlops .
