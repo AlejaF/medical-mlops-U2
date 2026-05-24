@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from flask import Flask, request, jsonify
 from predictor import predecir_estado
+from collections import Counter
 
 app = Flask(__name__)
 
@@ -53,19 +54,25 @@ def reporte():
             "r"
         ) as f:
 
-            datos = [
+            lineas=f.readlines()
 
-                json.loads(linea)
+        datos=[]
 
-                for linea in f.readlines()
+        for linea in lineas:
 
-            ]
+            linea=linea.strip()
+
+            if linea:
+
+                datos.append(
+                    json.loads(linea)
+                )
 
     except FileNotFoundError:
 
         datos=[]
 
-    categorias = [
+    categorias=[
 
         x["estado"]
 
@@ -73,11 +80,11 @@ def reporte():
 
     ]
 
-    conteo = Counter(categorias)
+    conteo=Counter(categorias)
 
-    ultimas = datos[-5:]
+    ultimas=datos[-5:]
 
-    ultima_fecha = (
+    ultima_fecha=(
 
         datos[-1]["fecha"]
 
@@ -89,11 +96,11 @@ def reporte():
 
     return jsonify({
 
-        "total_por_categoria": dict(conteo),
+        "total_por_categoria":dict(conteo),
 
-        "ultimas_5_predicciones": ultimas,
+        "ultimas_5_predicciones":ultimas,
 
-        "fecha_ultima_prediccion": ultima_fecha
+        "fecha_ultima_prediccion":ultima_fecha
 
     })
 
