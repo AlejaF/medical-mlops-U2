@@ -1,6 +1,6 @@
 name: MLOps Pipeline
 
-'on':
+on:
   pull_request:
     branches:
       - main
@@ -26,6 +26,7 @@ jobs:
 
         with:
           issue-number: ${{ github.event.pull_request.number }}
+
           body: |
             CI/CD en acción. Ejecutando tareas …
 
@@ -49,6 +50,7 @@ jobs:
 
         with:
           issue-number: ${{ github.event.pull_request.number }}
+
           body: |
             CI/CD terminado con éxito.
 
