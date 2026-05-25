@@ -13,12 +13,10 @@ permissions:
   pull-requests: write
 
 jobs:
+  tests:
+    runs-on: ubuntu-latest
 
-    tests:
-      runs-on: ubuntu-latest
-
-      steps:
-
+    steps:
       - name: Descargar código
         uses: actions/checkout@v4
 
@@ -35,7 +33,7 @@ jobs:
         uses: actions/setup-python@v5
 
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
       - name: Instalar dependencias
         run: |
@@ -54,18 +52,16 @@ jobs:
           body: |
             CI/CD terminado con éxito.
 
+  docker:
+    if: github.event_name == 'push'
 
-    docker:
-      if: github.event_name == 'push'
+    runs-on: ubuntu-latest
 
-      runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
 
-      permissions:
-        packages: write
-        contents: read
-
-      steps:
-
+    steps:
       - name: Descargar código
         uses: actions/checkout@v4
 
