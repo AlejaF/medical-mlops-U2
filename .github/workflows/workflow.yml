@@ -77,8 +77,8 @@ jobs:
 
       - name: Construir imagen Docker
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/medical-mlops:latest .
+          docker build -t ghcr.io/alejaf/medical-mlops:latest .
 
       - name: Publicar imagen
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/medical-mlops:latest
+          docker push ghcr.io/alejaf/medical-mlops:latest
