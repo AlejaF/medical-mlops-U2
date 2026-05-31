@@ -155,9 +155,8 @@ La solución se divide en seis grandes bloques:
 
 El siguiente diagrama muestra la arquitectura MLOps completa propuesta para el sistema de predicción de enfermedades.
 
-```markdown
 ![Pipeline MLOps](docs/mlops_pipeline.png)
-```
+
 
 El diagrama resume las etapas de gestión de datos, preparación de datos, entrenamiento de modelos, automatización CI/CD, despliegue y monitoreo continuo descritas a lo largo de este documento.
 
@@ -468,67 +467,6 @@ Este enfoque permite que el sistema evolucione continuamente y mantenga niveles 
 
 ---
 
-## 4.7 Flujo General del Pipeline
-
-El flujo general de la solución propuesta puede resumirse de la siguiente manera:
-
-```text
-Fuentes de Datos
-        │
-        ▼
-PostgreSQL
-        │
-        ▼
-Great Expectations
-        │
-        ▼
-DVC
-        │
-        ▼
-Pandas + Jupyter
-        │
-        ▼
-imbalanced-learn
-        │
-        ▼
-Logistic Regression
-Random Forest
-XGBoost
-CatBoost
-        │
-        ▼
-MLflow
-        │
-        ▼
-Pytest
-        │
-        ▼
-GitHub Actions
-        │
-        ▼
-Docker
-        │
-        ▼
-FastAPI
-        │
- ┌──────┴──────┐
- ▼             ▼
-
-Local       Cloud
-
- └──────┬──────┘
-        ▼
-
-PostgreSQL
-        │
-        ▼
-Evidently
-        │
-        ▼
-Reentrenamiento
-```
-
----
 
 # 5. Tecnologías Seleccionadas y Justificación
 
